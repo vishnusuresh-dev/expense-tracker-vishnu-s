@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1 class="logo">Expense Tracker</h1>
+      <button type="button" class="button button-primary open-modal topbar-button">+ Add transaction</button>
+    </div>
+  </header>
+
+
+  <div class="page">
+
+    <aside class="sidebar">
+
+      <section class="card balance-card">
+        <p class="small-label">Current balance</p>
+        <p class="balance-amount" id="balance">₹0.00</p>
+
+        <div class="balance-row">
+          <div>
+            <p class="small-label">Total income</p>
+            <p class="stat-value income-text" id="total-income">₹0.00</p>
+          </div>
+          <div>
+            <p class="small-label">Total expenses</p>
+            <p class="stat-value" id="total-expense">₹0.00</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="month-nav">
+          <button type="button" class="nav-button" id="prev-month" title="Previous month">&lsaquo;</button>
+          <h2 class="month-label" id="month-label">This month</h2>
+          <button type="button" class="nav-button" id="next-month" title="Next month">&rsaquo;</button>
+        </div>
+
+        <div class="month-stats">
+          <div class="month-stat">
+            <p class="small-label">Spent</p>
+            <p class="stat-value" id="month-expense">₹0.00</p>
+          </div>
+          <div class="month-stat">
+            <p class="small-label">Earned</p>
+            <p class="stat-value income-text" id="month-income">₹0.00</p>
+          </div>
+        </div>
+
+        <h3 class="chart-title">Spending by category</h3>
+
+        <div id="chart">
+          <div class="donut-wrap">
+            <svg class="donut" id="donut" viewBox="0 0 42 42">
+              <circle class="donut-track" cx="21" cy="21" r="15.9155" />
+            </svg>
+            <div class="donut-center">
+              <p class="small-label" id="donut-center-label">Spent</p>
+              <p class="donut-center-value" id="donut-center-value">₹0.00</p>
+            </div>
+          </div>
+
+          <ul class="legend" id="chart-legend"></ul>
+        </div>
+
+        <p class="muted-text" id="chart-empty">No spending in this month yet.</p>
+      </section>
+
+    </aside>
+
+
+    <main class="main">
+
+      <div class="main-header">
+        <h2 class="main-title">Transactions</h2>
+        <p class="muted-text" id="count-label">0 transactions</p>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" class="input search-input" id="search-input" placeholder="Search transactions" />
+
+        <div class="segmented" id="filter-type">
+          <button type="button" class="segment active" data-value="all">All</button>
+          <button type="button" class="segment" data-value="income">Income</button>
+          <button type="button" class="segment" data-value="expense">Expenses</button>
+        </div>
+
+        <select class="select" id="filter-category">
+          <option value="all">All categories</option>
+        </select>
+      </div>
+
+      <div id="transaction-list"></div>
+
+      <div class="empty-state" id="empty-state">
+        <p class="empty-title" id="empty-title">No transactions yet</p>
+        <p id="empty-text">Add your first income or expense to get started.</p>
+      </div>
+
+    </main>
+  </div>
+
+
+  <div class="modal" id="transaction-modal">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+        <h2 id="form-title">Add transaction</h2>
+        <button type="button" class="close-button" id="close-modal-btn">&times;</button>
+      </div>
+
+      <form id="transaction-form" novalidate>
+
+        <div class="segmented segmented-full">
+          <input type="radio" name="type" id="type-expense" value="expense" checked />
+          <label class="segment" for="type-expense">Expense</label>
+          <input type="radio" name="type" id="type-income" value="income" />
+          <label class="segment" for="type-income">Income</label>
+        </div>
+
+        <div class="field">
+          <label for="amount">Amount (₹)</label>
+          <input class="input amount-input" type="number" id="amount" placeholder="0.00" step="0.01" />
+          <p class="field-error" id="amount-error"></p>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="category">Category</label>
+            <select class="select" id="category"></select>
+            <p class="field-error" id="category-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="date">Date</label>
+            <input class="input" type="date" id="date" />
+            <p class="field-error" id="date-error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <input class="input" type="text" id="description" placeholder="e.g. Lunch with friends" />
+          <p class="field-error" id="description-error"></p>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="button button-outline" id="cancel-btn">Cancel</button>
+          <button type="submit" class="button button-primary" id="submit-btn">Add transaction</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+  <div class="toast" id="toast" hidden>
+    <span id="toast-text"></span>
+    <button type="button" class="toast-button" id="toast-undo">Undo</button>
+  </div>
+
+  <button type="button" class="fab open-modal" title="Add transaction">+</button>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
