@@ -1,4 +1,3 @@
-// ----- Categories and their chart colors -----
 const expenseCategories = ["Food", "Transport", "Shopping", "Bills", "Entertainment", "Health", "Other"];
 const incomeCategories = ["Salary", "Freelance", "Investments", "Other"];
 
@@ -15,7 +14,7 @@ const categoryColors = {
   Investments: 9
 };
 
-// ----- Finding the elements on the page -----
+//fetching elements
 const modal = document.getElementById("transaction-modal");
 const modalBackdrop = document.getElementById("modal-backdrop");
 const openModalButtons = document.querySelectorAll(".open-modal");
@@ -59,7 +58,7 @@ const toast = document.getElementById("toast");
 const toastText = document.getElementById("toast-text");
 const toastUndo = document.getElementById("toast-undo");
 
-// ----- Data the app remembers -----
+
 let transactions = [];
 let editingId = null;
 let selectedMonth = "";
@@ -69,7 +68,6 @@ let toastTimer = null;
 let undoAction = null;
 
 
-// ----- Saving and loading (LocalStorage) -----
 function saveData() {
   localStorage.setItem("expense-tracker-transactions", JSON.stringify(transactions));
 }
@@ -82,7 +80,6 @@ function loadData() {
 }
 
 
-// ----- Small helper functions -----
 function formatMoney(amount) {
   const text = Math.abs(amount).toLocaleString("en-IN", {
     minimumFractionDigits: 2,
@@ -176,8 +173,6 @@ function fillFilterCategories() {
   }
 }
 
-
-// ----- Pop-up form -----
 function openModal() {
   modal.classList.add("open");
   amountInput.focus();
@@ -199,7 +194,6 @@ function resetForm() {
 }
 
 
-// ----- Validation -----
 function showError(field, message) {
   document.getElementById(field + "-error").textContent = message;
   document.getElementById(field).classList.add("input-error");
@@ -248,7 +242,6 @@ function validateForm() {
 }
 
 
-// ----- Add, edit, delete -----
 function handleSubmit(event) {
   event.preventDefault();
 
@@ -334,7 +327,6 @@ function showToast(message, onUndo) {
 }
 
 
-// ----- Showing the transaction list -----
 function getFilteredTransactions() {
   const search = searchInput.value.trim().toLowerCase();
   const result = [];
@@ -449,7 +441,6 @@ function showTransactions() {
 }
 
 
-// ----- Balance numbers -----
 function showSummary() {
   const income = addTotal(transactions, "income");
   const expense = addTotal(transactions, "expense");
@@ -460,7 +451,6 @@ function showSummary() {
 }
 
 
-// ----- Monthly summary and donut chart -----
 function highlight(name, amount, percent) {
   const slices = donut.querySelectorAll(".donut-slice");
   const rows = legend.querySelectorAll(".legend-item");
@@ -526,7 +516,6 @@ function showChart(monthItems) {
     return totals[b] - totals[a];
   });
 
-  // The donut circle is 100 units around, so a slice of 25% is 25 units long.
   let start = 0;
 
   names.forEach(function (name) {
@@ -612,7 +601,6 @@ function showEverything() {
 }
 
 
-// ----- Reacting to clicks and typing -----
 for (let i = 0; i < openModalButtons.length; i++) {
   openModalButtons[i].addEventListener("click", function () {
     resetForm();
@@ -692,7 +680,6 @@ toastUndo.addEventListener("click", function () {
 });
 
 
-// ----- Start the app -----
 fillFilterCategories();
 selectedMonth = getToday().slice(0, 7);
 loadData();
