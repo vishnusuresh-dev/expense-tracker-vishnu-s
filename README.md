@@ -1,6 +1,6 @@
 # Expense Tracker
 
-A simple expense tracker built with HTML, CSS and vanilla JavaScript. You can add income and expenses, view them month by month, and see a category-wise spending chart. No backend or framework is used, and data is saved in the browser using localStorage.
+A simple expense tracker built with HTML, CSS and vanilla JavaScript. You can add income and expenses, view them month by month, and see a category-wise spending chart
 
 ## Features
 
