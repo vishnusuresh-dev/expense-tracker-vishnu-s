@@ -68,11 +68,14 @@ select {
 }
 
 .logo {
-  font-size: 18px;
+  font-size: 30px;
   font-weight: 800;
 }
 
-
+.logo-text{
+  font-size: 0.75rem;
+  margin-left: 0.15rem;
+}
 
 .page {
   display: flex;
