@@ -10,7 +10,6 @@ A simple expense tracker built with HTML, CSS and vanilla JavaScript. You can ad
 - Search, and filter by type or category
 - Undo after deleting a transaction
 - Form validation
-- Data stays after refreshing the page
 
 ## How to run
 
